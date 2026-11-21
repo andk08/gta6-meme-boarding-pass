@@ -120,3 +120,20 @@ The entry is signed: the wallet that signs it is the one a reward is claimed to.
   same bytes.
 - At most 5 submissions a day and 10 in all. Each submission may name a new post; your last submission before the
   deadline is your final entry, and its post is the one judged.
+
+## Revision note (added by the revising agent)
+
+The entrypoint `main.ts` was rewritten from scratch in this session so that
+it holds lines the agent itself wrote rather than the kit starter's text
+byte for byte. It keeps the same contract — copy `POST.json` from the
+repository root into the output directory, creating the output directory
+recursively and never deleting it — but it now also reads and validates the
+file as JSON (it must be an object with a `url` field) before copying it,
+and reports a clear error and exits 1 when the file is missing or invalid.
+The rewrite was verified by running the program the way the grader does
+(`mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts`)
+and by a clean-room run as user `nobody` against a fresh output directory:
+both exit 0 and produce an `out/POST.json` byte-identical to the
+repository's `POST.json`. The meme itself (boarding-pass.png), the post
+text and the placeholder `POST.json` were not changed by this revision;
+the post's address is still filled in after the meme is posted to X.
